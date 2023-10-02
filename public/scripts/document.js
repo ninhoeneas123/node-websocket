@@ -9,9 +9,6 @@ var chatName = params.get('chat-name')
 const documentNameUppercase = chatName[0].toUpperCase() + chatName.substring(1);
 selectChat(chatName)
 
-console.log("aqui", userName)
-
-const editText = document.getElementById("send-message")
 const documentTitle = document.getElementById("chat-title")
 
 documentTitle.textContent = `Chat ${documentNameUppercase}` || "Unnamed Document"
@@ -121,4 +118,8 @@ function createBallonHistoric(messages) {
     sortedMessages.forEach(createHistoricBalloon);
 }
 
-export { sendMessage, createBallonHistoric, createBalloon}
+function onlineUsersCount(count) {
+    document.getElementById('online-indicator').textContent = count;
+}
+
+export { sendMessage, createBallonHistoric, createBalloon, onlineUsersCount }

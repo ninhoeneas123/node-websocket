@@ -14,27 +14,31 @@ async function createMessageTech(data: SaveMenssage) {
     await ChatTechModel.create(dataMessage)
 }
 
-io.on('connection', (socket: any) => {
-    
-    socket.on('select-chat', async (chatName: string, returnText: any) => {
-        socket.join(chatName)
-        const historicChat = await findDocument(chatName)
 
+let usersCount = 0;
+io.on('connection', (socket: any) => {
+
+    usersCount++
+    io.emit('online-users-count', usersCount);
+
+
+    socket.on('select-chat', async (chatName: string, returnText: any) => {
+        socket.join(chatName);
+        const historicChat = await findDocument(chatName);
         if (historicChat) {
-            socket.emit("historic-message", historicChat)
+            socket.emit("historic-message", historicChat);
         }
-    })
+    });
 
     socket.on('create-message-back', async (data: SaveMenssage) => {
-        console.log(data)
-        createMessageTech(data)
-        socket.to(data.chatName).emit('create-message-front', data)
-    })
+        createMessageTech(data);
+        socket.to(data.chatName).emit('create-message-front', data);
+    });
 
     socket.on("disconnect", (reason: any) => {
+        usersCount--
+        io.emit('online-users-count', usersCount); // Emitindo para todos os sockets
         console.log(`The socket "${socket.id}" has been disconnected!
         Reason: ${reason}`);
     });
-
-})
-
+});

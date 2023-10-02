@@ -1,11 +1,10 @@
 
-import { sendMessage, createBallonHistoric, createBalloon } from '../scripts/document.js'
+import { onlineUsersCount, createBallonHistoric, createBalloon } from '../scripts/document.js'
 
 const socket = io()
 
 function selectChat(name) {
     socket.emit("select-chat", name, (text) => {
-        console.log(name)
         createBallonHistoric(text)
     })
 }
@@ -19,8 +18,11 @@ socket.on('historic-message', (message) => {
 })
 
 socket.on('create-message-front', (data) => {
-    console.log(data)
     createBalloon(data);
 });
+
+socket.on('online-users-count', (data) => {
+    onlineUsersCount(data)
+})
 
 export { emitEditText, selectChat } 
