@@ -1,20 +1,44 @@
 import { io } from "./server"
 import ChatTechModel from './db/schemas/chat-tech.schema'
+import ChatSportModel from './db/schemas/chat-sport.schema'
+import ChatAutoModel from './db/schemas/chat-auto.schema'
 import { SaveMenssage } from "./interfaces/save-message.interface"
 
-const clientRooms: Record<string, Set<string>> = {};
+
+
 async function findDocument(chatName: string) {
-    const document = await ChatTechModel.find()
-    return document
+
+    let historicData
+    switch (chatName) {
+        case "tech":
+            historicData = await ChatTechModel.find()
+            break;
+        case "sport":
+            historicData = await ChatSportModel.find()
+            break;
+        case "autos":
+            historicData = await ChatAutoModel.find()
+            break;
+    }
+    return historicData
 }
 
-async function createMessageTech(data: SaveMenssage) {
+async function createMessageTech(chatName: string, data: SaveMenssage) {
     const dataMessage = data
     dataMessage.shippingTime = Date.now()
-    await ChatTechModel.create(dataMessage)
+
+    switch (chatName) {
+        case "tech":
+            await ChatTechModel.create(dataMessage)
+            break;
+        case "sport":
+            await ChatSportModel.create(dataMessage)
+            break;
+        case "autos":
+            await ChatAutoModel.create(dataMessage)
+            break;
+    }
 }
-
-
 let usersCount = 0;
 io.on('connection', (socket: any) => {
 
@@ -31,7 +55,8 @@ io.on('connection', (socket: any) => {
     });
 
     socket.on('create-message-back', async (data: SaveMenssage) => {
-        createMessageTech(data);
+        const { chatName } = data
+        createMessageTech(chatName, data);
         socket.to(data.chatName).emit('create-message-front', data);
     });
 

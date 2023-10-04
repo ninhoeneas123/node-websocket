@@ -6,4 +6,5 @@ export interface SaveMenssage{
 
     chatName: string
     
+    shippingTime?: Number
 }

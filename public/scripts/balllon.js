@@ -1,18 +1,3 @@
-
-import { emitEditText, selectChat } from "../sockets/document-socket.js"
-
-
-
-const params = new URLSearchParams(window.location.search)
-var userName = params.get('user-name');
-var chatName = params.get('chat-name')
-const documentNameUppercase = chatName[0].toUpperCase() + chatName.substring(1);
-selectChat(chatName)
-
-const documentTitle = document.getElementById("chat-title")
-
-documentTitle.textContent = `Chat ${documentNameUppercase}` || "Unnamed Document"
-
 function createBalloon(message) {
     var messagesContainer = document.getElementById('messages');
 
@@ -55,24 +40,4 @@ function createBalloon(message) {
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
 }
-
-function sendMessage() {
-    const messageContent = document.getElementById('message').value;
-    const data = { messageContent, userName, chatName };
-    emitEditText(data);
-    createBalloon(data);
-
-}
-
-document.getElementById('send-button').addEventListener('click', sendMessage);
-
-function createBallonHistoric(messages) {
-    const sortedMessages = messages.sort((a, b) => a.timestamp - b.timestamp);
-    sortedMessages.forEach(createBalloon);
-}
-
-function onlineUsersCount(count) {
-    document.getElementById('online-indicator').textContent = count;
-}
-
-export { sendMessage, createBallonHistoric, createBalloon, onlineUsersCount }
+export {createBalloon}
