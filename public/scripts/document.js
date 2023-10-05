@@ -72,7 +72,7 @@ function createBallonHistoric(messages) {
 }
 
 function onlineUsersCount(count) {
-    document.getElementById('online-indicator').textContent = count;
+    document.getElementById('user-count').textContent = count;
 }
 
 export { sendMessage, createBallonHistoric, createBalloon, onlineUsersCount }
