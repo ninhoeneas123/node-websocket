@@ -39,15 +39,27 @@ async function createMessageTech(chatName: string, data: SaveMenssage) {
             break;
     }
 }
-let usersCount = 0;
+let roomsData: any = {};
+
 io.on('connection', (socket: any) => {
 
-    usersCount++
-    io.emit('online-users-count', usersCount);
+    function countClients(chatName: string) {
+        if (!roomsData[chatName]) {
+            roomsData[chatName] = new Set();
+        }
+        roomsData[chatName].add(socket.id);
 
+        const roomClients = io.sockets.adapter.rooms.get(chatName);
+        const numClients = roomClients ? roomClients.size : 0;
+        return numClients
+    }
 
     socket.on('select-chat', async (chatName: string, returnText: any) => {
         socket.join(chatName);
+        const numClients = countClients(chatName)
+
+        io.to(chatName).emit('online-users-count', numClients);
+
         const historicChat = await findDocument(chatName);
         if (historicChat) {
             socket.emit("historic-message", historicChat);
@@ -61,8 +73,13 @@ io.on('connection', (socket: any) => {
     });
 
     socket.on("disconnect", (reason: any) => {
-        usersCount--
-        io.emit('online-users-count', usersCount); // Emitindo para todos os sockets
+        for (const room in roomsData) {
+            if (roomsData[room].has(socket.id)) {
+                roomsData[room].delete(socket.id);
+                const numClients = roomsData[room].size;
+                io.to(room).emit('online-users-count', numClients);
+            }
+        }
         console.log(`The socket "${socket.id}" has been disconnected!
         Reason: ${reason}`);
     });

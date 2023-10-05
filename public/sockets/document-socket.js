@@ -22,6 +22,7 @@ socket.on('create-message-front', (data) => {
 });
 
 socket.on('online-users-count', (data) => {
+    console.log("data", data)
     onlineUsersCount(data)
 })
 
