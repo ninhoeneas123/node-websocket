@@ -3,12 +3,20 @@ import ChatTechModel from './db/schemas/chat-tech.schema'
 import ChatSportModel from './db/schemas/chat-sport.schema'
 import ChatAutoModel from './db/schemas/chat-auto.schema'
 import { SaveMenssage } from "./interfaces/save-message.interface"
+import { HistoricData } from './interfaces/historic-data.interface'
+
+
+interface Message {
+    sender: string;
+    content: string;
+    timestamp: Date;
+}
 
 
 
-async function findDocument(chatName: string) {
+async function findHistoric(chatName: string) {
+    let historicData: HistoricData = [];
 
-    let historicData
     switch (chatName) {
         case "tech":
             historicData = await ChatTechModel.find()
@@ -20,13 +28,13 @@ async function findDocument(chatName: string) {
             historicData = await ChatAutoModel.find()
             break;
     }
+
     return historicData
 }
 
-async function createMessageTech(chatName: string, data: SaveMenssage) {
+async function createHistoric(chatName: string, data: SaveMenssage) {
     const dataMessage = data
     dataMessage.shippingTime = Date.now()
-
     switch (chatName) {
         case "tech":
             await ChatTechModel.create(dataMessage)
@@ -39,6 +47,9 @@ async function createMessageTech(chatName: string, data: SaveMenssage) {
             break;
     }
 }
+
+
+
 let roomsData: any = {};
 
 io.on('connection', (socket: any) => {
@@ -60,7 +71,7 @@ io.on('connection', (socket: any) => {
 
         io.to(chatName).emit('online-users-count', numClients);
 
-        const historicChat = await findDocument(chatName);
+        const historicChat = await findHistoric(chatName);
         if (historicChat) {
             socket.emit("historic-message", historicChat);
         }
@@ -68,7 +79,7 @@ io.on('connection', (socket: any) => {
 
     socket.on('create-message-back', async (data: SaveMenssage) => {
         const { chatName } = data
-        createMessageTech(chatName, data);
+        createHistoric(chatName, data);
         socket.to(data.chatName).emit('create-message-front', data);
     });
 
