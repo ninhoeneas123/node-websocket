@@ -15,6 +15,7 @@ documentTitle.textContent = `Chat ${documentNameUppercase}` || "Unnamed Document
 
 
 
+const userColors = {};
 function getRandomColor() {
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -28,6 +29,7 @@ function getColorForUser(userName) {
     if (!userColors[userName]) {
         userColors[userName] = getRandomColor();
     }
+    console.log(userColors)
     return userColors[userName];
 }
 
@@ -40,10 +42,11 @@ function createBalloon(message) {
     var senderInfo = document.createElement('div');
     senderInfo.classList.add('sender-info');
     senderInfo.textContent = message.userName;
-    console.log(message)
+    const userColor = getColorForUser(message.userName);
+    senderInfo.style.color = userColor;
     senderInfo.style.fontSize = '16px'; // Aumenta o tamanho da fonte
     senderInfo.style.fontWeight = 'bold'; // Torna o texto em negrito
-    
+
 
     var headerDivider = document.createElement('hr'); // Adiciona uma linha horizontal para separar o cabeçalho da mensagem
 

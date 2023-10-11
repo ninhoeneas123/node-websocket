@@ -6,6 +6,7 @@ import { SaveMenssage } from "./interfaces/save-message.interface"
 import { HistoricData } from './interfaces/historic-data.interface'
 
 
+
 interface Message {
     sender: string;
     content: string;
@@ -14,7 +15,7 @@ interface Message {
 
 
 
-async function findHistoric(chatName: string) {
+async function findHistory(chatName: string) {
     let historicData: HistoricData = [];
 
     switch (chatName) {
@@ -32,7 +33,7 @@ async function findHistoric(chatName: string) {
     return historicData
 }
 
-async function createHistoric(chatName: string, data: SaveMenssage) {
+async function createHistory(chatName: string, data: SaveMenssage) {
     const dataMessage = data
     dataMessage.shippingTime = Date.now()
     switch (chatName) {
@@ -47,7 +48,6 @@ async function createHistoric(chatName: string, data: SaveMenssage) {
             break;
     }
 }
-
 
 
 let roomsData: any = {};
@@ -71,7 +71,7 @@ io.on('connection', (socket: any) => {
 
         io.to(chatName).emit('online-users-count', numClients);
 
-        const historicChat = await findHistoric(chatName);
+        const historicChat = await findHistory(chatName);
         if (historicChat) {
             socket.emit("historic-message", historicChat);
         }
@@ -79,7 +79,7 @@ io.on('connection', (socket: any) => {
 
     socket.on('create-message-back', async (data: SaveMenssage) => {
         const { chatName } = data
-        createHistoric(chatName, data);
+        createHistory(chatName, data);
         socket.to(data.chatName).emit('create-message-front', data);
     });
 
