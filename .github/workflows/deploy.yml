@@ -13,10 +13,10 @@ jobs:
 
     - name: Copy files with SSH
       uses: easingthemes/ssh-deploy@main
-        env:
-          SSH_PRIVATE_KEY: ${{secrets.EC2_SSH_KEY}}
-          SOURCE: "./"
-          REMOTE_HOST:"ec2-3-92-142-2.compute-1.amazonaws.com"
-          REMOTE_USER: "ec2-user"
-          TARGET: "home/chat"
-          EXCLUDE:'/dist/,/node_modules/, **.env, rebuild_app.sh, watcher.sh'
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+        SOURCE: "./"
+        REMOTE_HOST: "ec2-3-92-142-2.compute-1.amazonaws.com"
+        REMOTE_USER: "ec2-user"
+        TARGET: "/home/chat"
+        EXCLUDE: '/dist/','/node_modules/','**.env','rebuild_app.sh','watcher.sh'
