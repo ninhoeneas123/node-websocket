@@ -1,7 +1,9 @@
 name: Push-to-EC2
+
 on:
   push:
-       branches: ["main"]
+    branches: ["main"]
+
 jobs:
   deploy:
     name: Deploy to EC2
@@ -13,10 +15,9 @@ jobs:
     - name: Copy files with SSH
       uses: easingthemes/ssh-deploy@main
       env:
-        SSH_PRIVATE_KEY: "${{secrets.EC2_KEY}}""
+        SSH_PRIVATE_KEY: "${{secrets.EC2_KEY}}"
         SOURCE: "./"
         REMOTE_HOST: "ec2-54-147-16-85.compute-1.amazonaws.com"
         REMOTE_USER: "ec2-user"
         TARGET: "/home/chat"
         EXCLUDE: "/dist/,/node_modules/,**.env,rebuild_app.sh,watcher.sh"
-
