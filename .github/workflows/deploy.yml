@@ -10,14 +10,12 @@ jobs:
     - name: Checkout the files
       uses: actions/checkout@v3
 
-    - name: Copy files with SSH
-      uses: easingthemes/ssh-deploy@main
-      
-      env:
-        SSH_PRIVATE_KEY: "${{ secrets.EC2_KEY}}"
-        SOURCE: "./"
-        REMOTE_HOST: "ec2-3-92-142-2.compute-1.amazonaws.com"
-        REMOTE_USER: "ec2-user"
-        TARGET: "/home/chat"
-        EXCLUDE: "/dist/,/node_modules/,**.env,rebuild_app.sh,watcher.sh"
-
+    name: rsync deployments
+        uses: burnett01/rsync-deployments@5.1
+        with:
+          switches: -avzr --delete
+          path: ./*
+          remote_path: /var/www/my-app/
+          remote_host: 54.147.16.85.compute.amazonaws.com
+          remote_user: ubuntu
+          remote_key: "${{ secrets.SSH_PRIVATE_KEY }}"
