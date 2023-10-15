@@ -1,23 +1,21 @@
-name: Push-to-EC2
+name: Node.js CI/CD
 
 on:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
 
 jobs:
-  deploy:
-    name: Deploy to EC2
-    runs-on: ubuntu-latest
+  build:
+    runs-on: self-hosted
+    strategy:
+      matrix:
+        node-version: [20.x]
     steps:
-    - name: Checkout the files
-      uses: actions/checkout@v3
-
-    - name: Copy files with SSH
-      uses: easingthemes/ssh-deploy@main
-      env:
-        SSH_PRIVATE_KEY: "${{secrets.EC2_KEY}}"
-        SOURCE: "./"
-        REMOTE_HOST: "ec2-54-147-16-85.compute-1.amazonaws.com"
-        REMOTE_USER: "ec2-user"
-        TARGET: "/home/chat"
-        EXCLUDE: "/dist/,/node_modules/,**.env,rebuild_app.sh,watcher.sh"
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: pm2 restart backendserver
