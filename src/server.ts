@@ -4,11 +4,13 @@ import * as path from 'path';
 import {Server} from 'socket.io';
 import http from 'http'
 import { connectDb } from './db/db-connect';
+import * as dotenv from 'dotenv';
+
 
 const PORT = process.env.PORT || 3000
 const app = express()
 app.use(express.static(__dirname + '/../public'))
-
+dotenv.config();
 
 const httpService = http.createServer(app)
 export const io = new Server(httpService, {

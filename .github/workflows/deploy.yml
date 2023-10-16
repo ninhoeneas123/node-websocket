@@ -25,11 +25,11 @@ jobs:
       - name: Run your application
         run: npm run dev
         env:
-         DB_URL: ${{ secrets.DB_URL }}
+         DB_URL: ${{secrets.DB_URL}}
 
       - name: Use .env environment variables
         run: |
-          echo DB_URL=${{ secrets.DB_URL }} >> .env
+          echo DB_URL=${{secrets.DB_URL}} >> .env
 
       - name: Verificar conteúdo do .env
         run: cat .env
