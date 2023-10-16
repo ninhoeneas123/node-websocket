@@ -24,7 +24,8 @@ jobs:
       
       - name: Run your application
         run: npm run 
-        env: ${{ secrets.DB_URL }}
+        env:
+         DB_URL: ${{ secrets.DB_URL }}
 
       - name: Use .env environment variables
         run: |
