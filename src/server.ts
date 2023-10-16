@@ -1,7 +1,7 @@
 import express from 'express';
 import { createServer } from 'node:http';
 import * as path from 'path';
-import socket from 'socket.io'
+import {Server} from 'socket.io';
 import http from 'http'
 import { connectDb } from './db/db-connect';
 
@@ -11,7 +11,7 @@ app.use(express.static(__dirname + '/../public'))
 
 
 const httpService = http.createServer(app)
-export const io = socket(httpService, {
+export const io = new Server(httpService, {
     path: '/socket.io'
 })
 
