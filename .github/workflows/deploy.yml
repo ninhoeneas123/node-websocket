@@ -23,7 +23,7 @@ jobs:
         run: npm ci
       
       - name: Run your application
-        run: npm start
+        run: npm run dev
 
       - name: Use .env environment variables
         run: |
