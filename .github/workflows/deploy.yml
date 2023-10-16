@@ -30,7 +30,7 @@ jobs:
         run: cat .env
       
       - name: Run your application
-        run: npm start
+        run: npm run
         env:
          DB_URL: ${{secrets.DB_URL}}
 
