@@ -29,7 +29,7 @@ jobs:
 
       - name: Use .env environment variables
         run: |
-          echo DB_URL= ${{ secrets.DB_URL }} >> .env
+          echo DB_URL=${{ secrets.DB_URL }} >> .env
 
       - name: Verificar conteúdo do .env
         run: cat .env
