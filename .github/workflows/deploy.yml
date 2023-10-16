@@ -23,7 +23,7 @@ jobs:
         run: npm ci
       
       - name: Run your application
-        run: npm run 
+        run: npm run dev
         env:
          DB_URL: ${{ secrets.DB_URL }}
 
