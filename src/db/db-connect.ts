@@ -3,11 +3,11 @@ import cron from 'node-cron';
 
 
 function connectDb() {
-    const db = mongoose.connect(`${process.env.DB_URL}`)
+    console.log(`${process.env.DB_URL}`); // Corrigido aqui, a string de template estava mal formatada
+    const db = mongoose.connect(`${process.env.DB_URL}`);
 
     db.then(() => {
-        console.log('Connection to the database made successfully')
-
+        console.log('Connection to the database made successfully');
     }).catch(error => console.error(error));
 }
 
