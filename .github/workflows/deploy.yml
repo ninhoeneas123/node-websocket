@@ -21,11 +21,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-      
-      - name: Run your application
-        run: npm run dev
-        env:
-         DB_URL: ${{secrets.DB_URL}}
 
       - name: Use .env environment variables
         run: |
@@ -33,4 +28,11 @@ jobs:
 
       - name: Verificar conteúdo do .env
         run: cat .env
+      
+      - name: Run your application
+        run: npm run dev
+        env:
+         DB_URL: ${{secrets.DB_URL}}
+
+      
     
