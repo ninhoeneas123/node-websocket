@@ -29,5 +29,4 @@ jobs:
 
       - name: Use .env environment variables
         run: |
-          touch node-websocket/node-websocket/.env
-          echo "DB_URL=${{ secrets.DB_URL }}" >> node-websocket/node-websocket/.env
+          echo "DB_URL=${{ secrets.DB_URL }}" >> .env
