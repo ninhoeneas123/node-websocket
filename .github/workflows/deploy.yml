@@ -28,7 +28,7 @@ jobs:
       - name: echo variable
         run: echo ${{secrets.DB_URL}}
 
-       - name: Build TypeScript
+      - name: Build TypeScript
         run: npm run build 
 
       - name: Run your application
