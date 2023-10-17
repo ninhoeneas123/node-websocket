@@ -29,7 +29,7 @@ jobs:
         run: echo ${{secrets.DB_URL}}
 
       - name: Run your application
-        run: npx ts-node-dev --respawn --transpile-only --ignore-watch node_modules src/server.ts
+        run: npm start
         env: 
           DB_URL: ${{secrets.DB_URL}}
 
