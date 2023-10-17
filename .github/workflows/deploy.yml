@@ -28,8 +28,11 @@ jobs:
       - name: echo variable
         run: echo ${{secrets.DB_URL}}
 
+       - name: Build TypeScript
+        run: npm run build 
+
       - name: Run your application
-        run: npm run
+        run: npm run dev
         env: 
           DB_URL: ${{secrets.DB_URL}}
 
