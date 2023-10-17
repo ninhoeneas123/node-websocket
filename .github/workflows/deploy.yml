@@ -22,6 +22,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Install ts-node-dev
+        run: npm install -g ts-node-dev
+  
+
       - name: Use .env environment variables
         run: |
           echo DB_URL=${{secrets.DB_URL}} >> .env
@@ -31,7 +35,6 @@ jobs:
       
       - name: Run your application
         run: ts-node-dev --respawn --transpile-only --env-file .env --ignore-watch node_modules --no-notify src/socket-back.ts
-
         env:
          DB_URL: ${{secrets.DB_URL}}
 
