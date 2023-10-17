@@ -20,7 +20,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Use .env environment variables
         run: |
@@ -30,7 +30,8 @@ jobs:
         run: cat .env
       
       - name: Run your application
-        run: npm run
+        run: ts-node-dev --respawn --transpile-only --env-file .env --ignore-watch node_modules --no-notify src/socket-back.ts
+
         env:
          DB_URL: ${{secrets.DB_URL}}
 
