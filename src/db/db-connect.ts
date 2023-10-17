@@ -15,6 +15,9 @@ function connectDb() {
 cron.schedule('*/30 * * * *', async () => {
     try {
         const collections = await mongoose.connection.db.listCollections().toArray();
+        if(collections.length === 0 ){
+            console.log("Não existe coleções")
+        }
         for (const collection of collections) {
             await mongoose.connection.db.collection(collection.name).drop();
             console.log(`Coleção ${collection.name} apagada.`);

@@ -25,6 +25,12 @@ jobs:
       - name: Build TypeScript
         run: npm run build 
 
+      - name: Build TypeScript
+        run: npm run build
+
+      - name: Run Websocket Application
+        run: npm run web 
+
       - name: Use .env environment variables
         run: |
           echo DB_URL=${{secrets.DB_URL}} >> .env

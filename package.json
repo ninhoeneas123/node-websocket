@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc", 
+    "build": "tsc",
     "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules --no-notify src/socket-back.ts",
+    "web": "node src/socket-back.ts",
     "prod": "ts-node src/server.ts"
   },
   "author": "",
