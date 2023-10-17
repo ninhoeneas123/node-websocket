@@ -24,11 +24,11 @@ jobs:
 
       - name: Install ts-node-dev
         run: npm install -g ts-node-dev
-        
+
       - name: Run your application
-              run: npm run dev
-              env:
-              DB_URL: ${{secrets.DB_URL}}
+        run: npm run dev
+        env:
+        DB_URL: ${{secrets.DB_URL}}
 
       - name: Use .env environment variables
         run: |
