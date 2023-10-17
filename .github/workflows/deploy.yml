@@ -31,10 +31,8 @@ jobs:
       - name: Build TypeScript
         run: npm run build 
 
-      - name: Debugging Script
-        run: |
-          set -x
-          npm run prod
+      - name: Run Application
+        run: node dist/server.js
         env: 
           DB_URL: ${{secrets.DB_URL}}
 
