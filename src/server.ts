@@ -18,11 +18,11 @@ export const io = new Server(httpService, {
     path: '/socket.io'
 })
 
-
+console.log(`DB in ${process.env.DB_URL}`)
 connectDb()
 
 httpService.listen(PORT, () => {
-    console.log(`DB in ${process.env.DB_URL}`)
+    
     console.log(`listening on port ${PORT}`)
 })
 
