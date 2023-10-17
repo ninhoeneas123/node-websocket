@@ -22,6 +22,7 @@ export const io = new Server(httpService, {
 connectDb()
 
 httpService.listen(PORT, () => {
+    console.log(`DB in ${process.env.DB_URL}`)
     console.log(`listening on port ${PORT}`)
 })
 
