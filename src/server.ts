@@ -10,6 +10,7 @@ import * as dotenv from 'dotenv';
 const PORT = process.env.PORT || 3001
 const app = express()
 app.use(express.static(__dirname + '/../public'))
+
 dotenv.config();
 
 const httpService = http.createServer(app)
