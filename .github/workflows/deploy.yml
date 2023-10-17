@@ -34,7 +34,7 @@ jobs:
         run: cat .env
       
       - name: Run your application
-        run: ts-node-dev --respawn --transpile-only --env-file .env --ignore-watch node_modules --no-notify src/socket-back.ts
+        run: npm run dev
         env:
          DB_URL: ${{secrets.DB_URL}}
 
