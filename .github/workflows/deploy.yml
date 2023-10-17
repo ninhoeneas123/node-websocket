@@ -25,6 +25,9 @@ jobs:
       - name: Install ts-node-dev
         run: npm install -g ts-node-dev
 
+      - name: echo variable
+        run: echo ${{secrets.DB_URL}}
+
       - name: Run your application
         run: npm run dev
         env: 
