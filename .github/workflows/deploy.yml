@@ -31,7 +31,6 @@ jobs:
       - name: Build TypeScript
         run: npm run build 
 
-      steps:
       - name: Debugging Script
         run: |
           set -x
