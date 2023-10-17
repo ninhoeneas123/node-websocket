@@ -32,7 +32,9 @@ jobs:
         run: npm run build 
 
       - name: Run Application
-        run: node dist/server.js
+        run: |
+        node dist/server.js
+         pkill node 
         env: 
           DB_URL: ${{secrets.DB_URL}}
 
