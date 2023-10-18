@@ -22,12 +22,7 @@ jobs:
     
       - name: Build TypeScript
         run: npm run build
-
-      - name: Run Websocket Application
-        run: npx ts-node src/socket-back.ts
-        env:
-          DB_URL: ${{secrets.DB_URL}}
-
+        
       - name: Use .env environment variables
         run: |
           echo DB_URL=${{secrets.DB_URL}} >> .env
