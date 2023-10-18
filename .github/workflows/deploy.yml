@@ -26,7 +26,7 @@ jobs:
       - name: Run Websocket Application
         run: npm run web 
         env:
-          DB_URL:${{secrets.DB_URL}}
+          DB_URL: ${{secrets.DB_URL}}
 
       - name: Use .env environment variables
         run: |
