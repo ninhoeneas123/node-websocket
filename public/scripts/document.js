@@ -92,6 +92,9 @@ function sendMessage() {
 }
 
 document.getElementById('send-button').addEventListener('click', sendMessage);
+document.getElementById('message').addEventListener('keydown', sendMessage);
+
+
 
 function createBallonHistoric(messages) {
     const sortedMessages = messages.sort((a, b) => a.timestamp - b.timestamp);
