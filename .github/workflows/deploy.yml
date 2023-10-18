@@ -24,7 +24,7 @@ jobs:
         run: npm run build
 
       - name: Run Websocket Application
-        run: npm run web 
+        run: npx ts-node src/socket-back.ts
         env:
           DB_URL: ${{secrets.DB_URL}}
 
