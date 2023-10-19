@@ -18,7 +18,6 @@ export const io = new Server(httpService, {
     path: '/socket.io'
 })
 
-
 connectDb()
 
 httpService.listen(PORT, () => {
