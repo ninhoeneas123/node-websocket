@@ -84,17 +84,21 @@ function createBalloon(message) {
 }
 
 function sendMessage() {
-    const messageContent = document.getElementById('message').value;
-    const data = { messageContent, userName, chatName };
-    emitEditText(data);
-    createBalloon(data);
+    const messageContent = document.getElementById('message').value.trim()
 
+    if ((event.keyCode === 13 || event.type === "click") && messageContent !== '') {
+        event.preventDefault();
+
+        const data = { messageContent, userName, chatName };
+        emitEditText(data);
+        createBalloon(data);
+
+        document.getElementById('message').value = '';
+    }
 }
 
 document.getElementById('send-button').addEventListener('click', sendMessage);
 document.getElementById('message').addEventListener('keydown', sendMessage);
-
-
 
 function createBallonHistoric(messages) {
     const sortedMessages = messages.sort((a, b) => a.timestamp - b.timestamp);
