@@ -1,21 +1,17 @@
 
 import { emitEditText, selectChat } from "../sockets/document-socket.js"
 
-
-
 const params = new URLSearchParams(window.location.search)
-var userName = params.get('user-name');
-var chatName = params.get('chat-name')
+const  userName = params.get('user-name');
+const chatName = params.get('chat-name')
 const documentNameUppercase = chatName[0].toUpperCase() + chatName.substring(1);
-selectChat(chatName)
-
 const documentTitle = document.getElementById("chat-title")
+const userColors = {};
+
 
 documentTitle.textContent = `Chat ${documentNameUppercase}` || "Unnamed Document"
+selectChat(chatName)
 
-
-
-const userColors = {};
 function getRandomColor() {
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -29,49 +25,46 @@ function getColorForUser(userName) {
     if (!userColors[userName]) {
         userColors[userName] = getRandomColor();
     }
-    console.log(userColors)
     return userColors[userName];
 }
 
 function createBalloon(message) {
-    var messagesContainer = document.getElementById('messages');
+    const messagesContainer = document.getElementById('messages');
 
-    var balloonMessage = document.createElement('div');
+    const balloonMessage = document.createElement('div');
     balloonMessage.classList.add('balao-mensagem');
 
-    var senderInfo = document.createElement('div');
+    const senderInfo = document.createElement('div');
     senderInfo.classList.add('sender-info');
     senderInfo.textContent = message.userName;
+
     const userColor = getColorForUser(message.userName);
     senderInfo.style.color = userColor;
-    senderInfo.style.fontSize = '16px'; // Aumenta o tamanho da fonte
-    senderInfo.style.fontWeight = 'bold'; // Torna o texto em negrito
+    senderInfo.style.fontSize = '16px'; 
+    senderInfo.style.fontWeight = 'bold'; 
 
+    const headerDivider = document.createElement('hr'); 
 
-    var headerDivider = document.createElement('hr'); // Adiciona uma linha horizontal para separar o cabeçalho da mensagem
-
-    var messageContent = document.createElement('div');
+    const messageContent = document.createElement('div');
     messageContent.classList.add('message-content');
     messageContent.textContent = message.messageContent;
 
-    var timestampInfo = document.createElement('div');
+    const timestampInfo = document.createElement('div');
     timestampInfo.classList.add('timestamp-info');
     timestampInfo.textContent = new Date().toLocaleTimeString();
-    timestampInfo.style.fontSize = '12px'; // Adiciona fonte de 12px
+    timestampInfo.style.fontSize = '12px'; 
     timestampInfo.style.textAlign = 'right';
 
-
-    // Define estilos do balão
-    balloonMessage.style.width = '80%'; // Define a largura do balão
+    balloonMessage.style.width = '80%';
     balloonMessage.style.display = 'flex';
     balloonMessage.style.flexDirection = 'column';
 
     if (message.userName === userName) {
-        balloonMessage.classList.add('my-message'); // Adiciona uma classe para estilizar a mensagem do próprio usuário
+        balloonMessage.classList.add('my-message'); 
         balloonMessage.style.alignSelf = 'flex-end';
         balloonMessage.style.marginLeft = '70%';
-        senderInfo.style.display = 'none'; // Esconde o nome do usuário
-        headerDivider.style.display = 'none'; // Esconde a linha de separação
+        senderInfo.style.display = 'none'; 
+        headerDivider.style.display = 'none'; 
     }
 
     balloonMessage.appendChild(senderInfo);
