@@ -1,6 +1,6 @@
-import ChatTechModel from '../db/schemas/chat-tech.schema'
-import ChatSportModel from '../db/schemas/chat-sport.schema'
-import ChatAutoModel from '../db/schemas/chat-auto.schema'
+import ChatTechModel from '../../db/schemas/chat-tech.schema'
+import ChatSportModel from '../../db/schemas/chat-sport.schema'
+import ChatAutoModel from '../../db/schemas/chat-auto.schema'
 import { FindHistory } from '../interfaces/find-history.interface'
 import { SaveMenssage } from '../interfaces/save-message.interface'
 

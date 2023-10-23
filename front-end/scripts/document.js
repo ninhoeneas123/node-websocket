@@ -2,7 +2,7 @@
 import { emitEditText, selectChat } from "../sockets/document-socket.js"
 
 const params = new URLSearchParams(window.location.search)
-const  userName = params.get('user-name');
+const userName = params.get('user-name');
 const chatName = params.get('chat-name')
 const documentNameUppercase = chatName[0].toUpperCase() + chatName.substring(1);
 const documentTitle = document.getElementById("chat-title")
@@ -10,7 +10,7 @@ const userColors = {};
 
 
 documentTitle.textContent = `Chat ${documentNameUppercase}` || "Unnamed Document"
-selectChat(chatName)
+selectChat(chatName, userName)
 
 function getRandomColor() {
     const letters = '0123456789ABCDEF';
@@ -40,10 +40,10 @@ function createBalloon(message) {
 
     const userColor = getColorForUser(message.userName);
     senderInfo.style.color = userColor;
-    senderInfo.style.fontSize = '16px'; 
-    senderInfo.style.fontWeight = 'bold'; 
+    senderInfo.style.fontSize = '16px';
+    senderInfo.style.fontWeight = 'bold';
 
-    const headerDivider = document.createElement('hr'); 
+    const headerDivider = document.createElement('hr');
 
     const messageContent = document.createElement('div');
     messageContent.classList.add('message-content');
@@ -52,7 +52,7 @@ function createBalloon(message) {
     const timestampInfo = document.createElement('div');
     timestampInfo.classList.add('timestamp-info');
     timestampInfo.textContent = new Date().toLocaleTimeString();
-    timestampInfo.style.fontSize = '12px'; 
+    timestampInfo.style.fontSize = '12px';
     timestampInfo.style.textAlign = 'right';
 
     balloonMessage.style.width = '80%';
@@ -60,11 +60,11 @@ function createBalloon(message) {
     balloonMessage.style.flexDirection = 'column';
 
     if (message.userName === userName) {
-        balloonMessage.classList.add('my-message'); 
+        balloonMessage.classList.add('my-message');
         balloonMessage.style.alignSelf = 'flex-end';
         balloonMessage.style.marginLeft = '70%';
-        senderInfo.style.display = 'none'; 
-        headerDivider.style.display = 'none'; 
+        senderInfo.style.display = 'none';
+        headerDivider.style.display = 'none';
     }
 
     balloonMessage.appendChild(senderInfo);
@@ -74,6 +74,29 @@ function createBalloon(message) {
 
     messagesContainer.appendChild(balloonMessage);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function notificationOnOut(status, userNameNotification) {
+    if (userNameNotification !== userName) { 
+
+        let notificacao = document.createElement('div');
+        if (status === "online") {
+            notificacao.classList.add('online');
+            notificacao.textContent = `${userNameNotification} entrou na sala 👋👋`;
+        } else if (status === "offline") {
+            notificacao.classList.add('offline');
+            notificacao.textContent = `${userNameNotification} saiu 👋👋`;
+        }
+
+        notificacao.classList.add('nova-entrada');
+        const chat = document.getElementById('messages');
+        chat.appendChild(notificacao);
+        chat.scrollTop = chat.scrollHeight;
+
+        setTimeout(() => {
+            notificacao.remove();
+        }, 5000)
+    }
 }
 
 function sendMessage() {
@@ -102,4 +125,4 @@ function onlineUsersCount(count) {
     document.getElementById('user-count').textContent = count;
 }
 
-export { sendMessage, createBallonHistoric, createBalloon, onlineUsersCount }
+export { sendMessage, createBallonHistoric, createBalloon, onlineUsersCount, notificationOnOut }
