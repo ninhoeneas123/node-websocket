@@ -35,11 +35,12 @@ io.on('connection', (socket: any) => {
 
     socket.on("disconnect", (reason: string) => {
         const user = User.filter(socket.id)
+        if (user) {
+            CountClients.toRemove(user.userName, socket.id)
+            User.delete(socket.id)
 
-        CountClients.toRemove(user.userName, socket.id)
-        User.delete(socket.id)
-
-        console.log(`The socket "${socket.id}" has been disconnected!
+            console.log(`The socket "${socket.id}" has been disconnected!
             Reason: ${reason}`);
+        }
     });
 });
